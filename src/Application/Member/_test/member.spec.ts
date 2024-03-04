@@ -10,6 +10,7 @@ describe('Member', () => {
   let memberService: MemberService;
   let memberRepository: MemberRepository;
   let memberController: MemberController;
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -29,6 +30,7 @@ describe('Member', () => {
       ],
       controllers: [MemberController]
     }).compile()
+
     memberRepository = module.get<MemberRepository>(MemberRepository);
     memberController = module.get<MemberController>(MemberController);
     memberService = module.get<MemberService>(MemberService);

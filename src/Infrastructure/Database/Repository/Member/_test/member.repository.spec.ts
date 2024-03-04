@@ -1,20 +1,22 @@
 import {Test, TestingModule} from "@nestjs/testing";
 import {getModelToken} from "@nestjs/mongoose";
 import {Model} from "mongoose";
-import {BadRequestException, ForbiddenException, NotFoundException} from "@nestjs/common";
+import {NotFoundException} from "@nestjs/common";
 import {Member} from "../../../../../Domain/Member/Model/member.schema";
 import {MemberRepository} from "../member.repository";
 
 
-describe('book repository', () => {
+describe('Member Repository', () => {
   let memberRepository: MemberRepository;
   let memberModel: Model<Member>;
+
   const mockMemberRepository = {
     create: jest.fn(),
     findOne: jest.fn(),
     find: jest.fn(),
     updateOne: jest.fn()
   }
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -25,6 +27,7 @@ describe('book repository', () => {
         }
       ]
     }).compile()
+
     memberRepository = module.get<MemberRepository>(MemberRepository)
     memberModel = module.get<Model<Member>>(getModelToken(Member.name))
   })
@@ -36,6 +39,7 @@ describe('book repository', () => {
         penalty_status: false,
         penalty_end_date: new Date()
       }
+
       // @ts-ignore
       jest.spyOn(memberModel, 'findOne').mockResolvedValue(payload);
       const result = await memberRepository.findMemberByName('bryan')
@@ -60,8 +64,10 @@ describe('book repository', () => {
   describe('applyPenalty', () => {
     it('should success', async() => {
       const date = new Date()
+
       // @ts-ignore
       jest.spyOn(memberModel, 'updateOne').mockResolvedValue(true)
+
       await expect(memberRepository.applyPenalty('bryan', date))
         .resolves
         .toBe(true)
@@ -87,6 +93,7 @@ describe('book repository', () => {
           penalty_end_date: new Date()
         }
       ]
+
       // @ts-ignore
       jest.spyOn(memberModel, 'find').mockResolvedValue(mockResult)
       const result = await memberRepository.allMembers()

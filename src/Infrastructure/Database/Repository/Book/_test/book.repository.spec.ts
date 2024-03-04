@@ -31,6 +31,7 @@ describe('book repository', () => {
         }
       ]
     }).compile()
+
     bookRepository = module.get<BookRepository>(BookRepository)
     bookModel = module.get<Model<Book>>(getModelToken(Book.name))
     borrowedBookModel = module.get<Model<BorrowedBook>>(getModelToken(BorrowedBook.name))
@@ -90,6 +91,7 @@ describe('book repository', () => {
         borrow_date: new Date(),
         return_date: new Date()
       }]
+
       // @ts-ignore
       jest.spyOn(borrowedBookModel, 'find').mockResolvedValue(payload);
       const result = await bookRepository.checkManyBorrowedBooks('bryan')
@@ -111,8 +113,10 @@ describe('book repository', () => {
           borrow_date: new Date(),
           return_date: new Date()
         }]
+
       // @ts-ignore
       jest.spyOn(borrowedBookModel, 'find').mockResolvedValue(payload);
+
       await expect(bookRepository.checkManyBorrowedBooks('bryan'))
         .rejects
         .toThrowError(ForbiddenException)
@@ -141,6 +145,7 @@ describe('book repository', () => {
         borrow_date: new Date(),
         return_date: new Date()
       }
+
       // @ts-ignore
       jest.spyOn(bookModel, 'findOne').mockResolvedValue(payload);
       const result = await bookRepository.findBookByCode('SHR-1')
@@ -177,7 +182,6 @@ describe('book repository', () => {
         return_date: new Date()
       }
 
-
       // @ts-ignore
       jest.spyOn(borrowedBookModel, 'findOne').mockResolvedValue(mockPayload);
 
@@ -207,6 +211,7 @@ describe('book repository', () => {
         author: 'something',
         stock: 123
       }]
+
       // @ts-ignore
       jest.spyOn(bookModel, 'find').mockResolvedValue(mockBooks);
       const {allBooks} = await bookRepository.existingBooks();
@@ -223,6 +228,7 @@ describe('book repository', () => {
         borrow_date: new Date(),
         return_date: new Date()
       }]
+
       // @ts-ignore
       jest.spyOn(borrowedBookModel, 'find').mockResolvedValue(mockBorrowedBooks);
       const {borrowedBooks} = await bookRepository.existingBooks();

@@ -36,6 +36,7 @@ describe('Books', () => {
       ],
       controllers: [BookController]
     }).compile()
+
     bookRepository = module.get<BookRepository>(BookRepository);
     memberRepository = module.get<MemberRepository>(MemberRepository);
     bookController = module.get<BookController>(BookController)
@@ -51,6 +52,7 @@ describe('Books', () => {
         borrow_date: date,
         return_date: new Date(2025, 0, 1),
       }
+
       bookRepository.findBookByCode = jest.fn().mockImplementation(() => Promise.resolve(true))
       bookRepository.checkBorrowedBook = jest.fn().mockImplementation(() => Promise.resolve(true))
       bookRepository.checkManyBorrowedBooks = jest.fn().mockImplementation(() => Promise.resolve(true))

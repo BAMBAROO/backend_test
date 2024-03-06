@@ -9,8 +9,6 @@ import {MemberRepository} from "../../Infrastructure/Database/Repository/Member/
 import {Member, MemberSchema} from "../../Domain/Member/Model/member.schema";
 
 @Module({
-  // imports: [
-  // ],
   controllers: [BookController],
   providers: [BookService],
   exports: [BookService]
